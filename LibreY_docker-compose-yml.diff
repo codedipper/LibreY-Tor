@@ -1,0 +1,51 @@
+diff --git a/docker-compose.yml b/docker-compose.yml
+index c0bc42f..3337280 100644
+--- a/docker-compose.yml
++++ b/docker-compose.yml
+@@ -2,7 +2,9 @@ services:
+   librey:
+     image: ghcr.io/ahwxorg/librey:latest
+     container_name: librey
+-    network_mode: bridge
++    networks:
++      librey_tor_net:
++        ipv4_address: 172.4.0.6
+     ports:
+       - 8080:8080
+     environment:
+@@ -17,16 +19,32 @@ services:
+       - CONFIG_CACHE_TIME=20
+       - CONFIG_DISABLE_API=false
+       - CONFIG_TEXT_SEARCH_ENGINE=auto
+-      - CURLOPT_PROXY_ENABLED=false
+-      - CURLOPT_PROXY=192.0.2.53:8388
+-      - CURLOPT_PROXYTYPE=CURLPROXY_HTTP
++      - CURLOPT_PROXY_ENABLED=true
++      - CURLOPT_PROXY=172.4.0.5:9050
++      - CURLOPT_PROXYTYPE=CURLPROXY_SOCKS5_HOSTNAME
+       - CURLOPT_USERAGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:116.0) Gecko/20100101 Firefox/116.0
+       - CURLOPT_FOLLOWLOCATION=true
+     volumes:
+       # - ./nginx_logs:/var/log/nginx # Disabled by default. These are the NGINX request logs.
+       - ./php_logs:/var/log/php83 # Enabled by default. These are the PHP error logs.
+     restart: unless-stopped
++    depends_on:
++      - librey_tor
+   watchtower: # Watchtower is not required but highly recommended, since Watchtower will re-pull and restart the LibreY container automatically whenever there's an update.
+     image: containrrr/watchtower
+     volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
++  librey_tor:
++    image: librey-tor:latest
++    networks:
++      librey_tor_net:
++        ipv4_address: 172.4.0.5
++    volumes:
++      - ../LibreY-Tor/torrc:/etc/tor/torrc
++
++networks:
++  librey_tor_net:
++    ipam:
++      config:
++        - subnet: 172.4.0.0/16
++    driver: bridge
