@@ -1,0 +1,12 @@
+SOCKSPort 172.4.0.5:9050
+SOCKSPolicy accept 172.4.0.6/32
+SOCKSPolicy reject *
+
+DataDirectory /var/lib/tor
+User tor
+
+Log notice stdout
+RunAsDaemon 0
+
+# UseBridges 1
+# Bridge xx.xxx.xxx.xxx:xx
