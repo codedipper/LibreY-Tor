@@ -36,7 +36,7 @@ index c0bc42f..3337280 100644
      volumes:
        - /var/run/docker.sock:/var/run/docker.sock
 +  librey_tor:
-+    image: librey-tor:latest
++    image: ghcr.io/codedipper/librey-tor:latest
 +    networks:
 +      librey_tor_net:
 +        ipv4_address: 172.4.0.5
