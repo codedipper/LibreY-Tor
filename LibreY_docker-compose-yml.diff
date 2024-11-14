@@ -23,7 +23,7 @@ index c0bc42f..3337280 100644
 +      - CURLOPT_PROXY_ENABLED=true
 +      - CURLOPT_PROXY=172.4.0.5:9050
 +      - CURLOPT_PROXYTYPE=CURLPROXY_SOCKS5_HOSTNAME
-       - CURLOPT_USERAGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:116.0) Gecko/20100101 Firefox/116.0
+       - CURLOPT_USERAGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0
        - CURLOPT_FOLLOWLOCATION=true
      volumes:
        # - ./nginx_logs:/var/log/nginx # Disabled by default. These are the NGINX request logs.
